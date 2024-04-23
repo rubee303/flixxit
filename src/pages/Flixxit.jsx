@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
+import Slider from "../components/Slider";
 
 
 export default function Flixxit() {
@@ -15,6 +16,7 @@ export default function Flixxit() {
   const navigate = useNavigate();
 
   const genresLoaded = useSelector((state) => state.flixxit.genresLoaded);
+  // const movies = useSelector((state) => state.flixxit.movies);
   const movies = useSelector((state) => state.flixxit.movies);
   const dispatch = useDispatch();
 
@@ -32,7 +34,8 @@ export default function Flixxit() {
   };
 
 
- console.log(movies);
+  //  console.log(movies);
+  
     return (
     <>
       <Container>
@@ -64,7 +67,7 @@ export default function Flixxit() {
         </div>
        
       
-
+<Slider movies={movies}/>
 
       </Container>
     </>
