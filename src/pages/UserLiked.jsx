@@ -1,14 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import { fetchMovies, getGenres } from "../store";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { firebaseAuth } from "../utils/firebase-config";
-// import styled from "styled-components";
-// import Navbar from "../components/Navbar";
-// import Slider from "../components/Slider";
-// import NotAvailable from "../components/NotAvailable";
-//  import SelectGenre from "../components/SelectGenre";
 
 import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,28 +7,26 @@ import { firebaseAuth } from "../utils/firebase-config";
 import Card from "../components/Card";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import { getUserLikedMovies } from "../store";
+import {getUsersLikedMovies } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UserLiked() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const movies = useSelector((state) => state.flixxit.movies);
-//  const [movies, setMovies] = useState([]);
 
-  const [email, setEmail] = useState(undefined);
+  const movies = useSelector((state) => state.flixxit.movies);
+ const [email, setEmail] = useState(undefined);
+
  onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setEmail(currentUser.email);
     else navigate("/login");
   });
-
-
-  
+ 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (email) {
-    dispatch(getUserLikedMovies(email));
+      dispatch(getUsersLikedMovies(email));
     }
   }, [email]);
 
@@ -53,6 +40,7 @@ export default function UserLiked() {
       <Navbar isScrolled={isScrolled} />
       <div className="content flex column">
         <h1>My List</h1>
+        {/* <div className="grid flex"> */}
         <div className="grid flex">
           {movies.map((movie, index) => {
             return (

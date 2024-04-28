@@ -19,7 +19,7 @@ export const getGenres = createAsyncThunk("flixxit/genres", async () => {
 });
 
 const createArrayFromRawData = (array, moviesArray, genres) => {
-    //console.log(array);
+  //console.log(array);
   array.forEach((movie) => {
     const movieGenres = [];
     movie.genre_ids.forEach((genre) => {
@@ -44,7 +44,7 @@ const getRawData = async (api, genres, paging) => {
       data: { results },
     } = await axios.get(`${api}${paging ? `&page=${i}` : ""}`);
     createArrayFromRawData(results, moviesArray, genres);
-  
+
   }
   // console.log({moviesArray});
   return moviesArray;
@@ -62,49 +62,50 @@ export const fetchMovies = createAsyncThunk(
       genres,
       true
     );
-    
+
   }
-    );
-    
-    export const fetchDataByGenre = createAsyncThunk(
-      "flixxit/moviesByGenres",
-      async ({ genre, type }, thunkApi) => {
-        console.log("in fetch data", genre, type);
-        const {
-          flixxit: { genres },
-        } = thunkApi.getState();
-        return getRawData(
-          `${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
-          genres
-          
-        );
-        
-        // return data;
-      }
+);
+
+export const fetchDataByGenre = createAsyncThunk(
+  "flixxit/moviesByGenres",
+  async ({ genre, type }, thunkApi) => {
+    console.log("in fetch data", genre, type);
+    const {
+      flixxit: { genres },
+    } = thunkApi.getState();
+    return getRawData(
+      `${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
+      genres
+
     );
 
-    export const getUserLikedMovies = createAsyncThunk(
-      "flixxit/getLiked",
-      async (email) => {
-        const {
-          data: { movies },
-        } = await axios.post(`http://localhost:5000/api/user/liked/${email}`);
-        return movies;
-      }
-    );
-    export const removeMovieFromLiked = createAsyncThunk(
-      "flixxit/deleteLiked",
-      async ({ movieId, email }) => {
-        const {
-          data: { movies },
-        } = await axios.put("http://localhost:5000/api/user/remove", {
-          email,
-          movieId,
-        });
-        return movies;
-      }
-    );
-    const FlixxitSlice = createSlice({
+    // return data;
+  }
+);
+
+export const getUsersLikedMovies = createAsyncThunk(
+  "flixxit/getLiked",
+  async (email) => {
+    const {
+      data: { movies },
+    } = await axios.post(`http://localhost:5000/api/user/liked`, { email });
+    return movies;
+
+  }
+);
+export const removeMovieFromLiked = createAsyncThunk(
+  "flixxit/deleteLiked",
+  async ({ movieId, email }) => {
+    const {
+      data: { movies },
+    } = await axios.put("http://localhost:5000/api/user/delete", {
+      email,
+      movieId,
+    });
+    return movies;
+  }
+);
+const FlixxitSlice = createSlice({
   name: "Flixxit",
   initialState,
   extraReducers: (builder) => {
@@ -113,16 +114,17 @@ export const fetchMovies = createAsyncThunk(
       state.genresLoaded = true;
     });
 
-   
-    
     builder.addCase(fetchMovies.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
-   
-    builder.addCase( removeMovieFromLiked.fulfilled, (state, action) => {
+    builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
+      state.movies = action.payload;
+    });
+
+    builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
   },

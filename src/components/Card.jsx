@@ -80,7 +80,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                <RiThumbUpFill title="like" />
                 <RiThumbDownFill title="Dislike" />
                 {isLiked ? (
-                  <BsCheck title="Remove from list"  onClick ={()=>dispatch(
+                  <BsCheck title="Remove from list" onClick ={()=>dispatch(
                     removeMovieFromLiked({ movieId: movieData.id, email })
                   )
                   }/>
