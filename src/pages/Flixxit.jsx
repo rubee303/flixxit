@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import backgroundImage from "../assets/home.jpg";
-import MovieLogo from "../assets/homeTitle.png";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
@@ -16,8 +15,7 @@ export default function Flixxit() {
   const navigate = useNavigate();
 
   const genresLoaded = useSelector((state) => state.flixxit.genresLoaded);
-  // const movies = useSelector((state) => state.flixxit.movies);
-  const movies = useSelector((state) => state.flixxit.movies);
+ const movies = useSelector((state) => state.flixxit.movies);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,9 +46,7 @@ export default function Flixxit() {
           />
 
           <div className="container">
-            <div className="logo">
-              <img src={MovieLogo} alt="Movie Logo" />
-            </div>
+          
 
             <div className="button flex">
               <button
@@ -65,11 +61,8 @@ export default function Flixxit() {
             </div>
           </div>
         </div>
-       
-      
-<Slider movies={movies}/>
-
-      </Container>
+       <Slider movies={movies}/>
+    </Container>
     </>
   );
 }
@@ -90,13 +83,7 @@ const Container = styled.div`
     .container {
       position: absolute;
       bottom: 1rem;
-      .logo {
-        img {
-          width: 100%;
-          height: 100%;
-          margin-left: 5rem;
-        }
-      }
+     
       .button {
         margin: 5rem;
         gap: 2rem;

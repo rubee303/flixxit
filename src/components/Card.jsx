@@ -13,8 +13,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import {removeMovieFromLiked } from "../store";
 import { useDispatch } from "react-redux";
 
-
-
 export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +27,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
 
   const addToList = async () => {
     try {
-      await axios.post("https://flixxit-backend-4.onrender.com/api/user/add", {
+      await axios.post("http://localhost:5000/api/user/add", {
         email,
         data: movieData,
       });
@@ -92,10 +90,11 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
                 <BiChevronDown title="More Info" />
               </div>
             </div>
-            <div className="genres flex">
+          <div className="genres flex">
+
               <ul className="flex">
                 {movieData.genres.map((genre) => (
-                  <li>{genre}</li>
+                  <li key={genre}>{genre}</li>
                 ))}
               </ul>
             </div>

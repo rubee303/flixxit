@@ -82,29 +82,30 @@ export const fetchDataByGenre = createAsyncThunk(
     // return data;
   }
 );
-
 export const getUsersLikedMovies = createAsyncThunk(
   "flixxit/getLiked",
   async (email) => {
     const {
       data: { movies },
-    } = await axios.post(`https://flixxit-backend-4.onrender.com/api/user/liked`, { email });
+    } = await axios.post(`https://project1-dbkf.onrender.com/api/user/liked`, { email });
     return movies;
 
   }
 );
 export const removeMovieFromLiked = createAsyncThunk(
   "flixxit/deleteLiked",
-  async ({ movieId, email }) => {
+  async ({ email, movieId }) => {
     const {
       data: { movies },
-    } = await axios.put("https://flixxit-backend-4.onrender.com/api/user/delete", {
+    } = await axios.put("https://project1-dbkf.onrender.com/api/user/delete", {
       email,
       movieId,
     });
     return movies;
   }
 );
+
+
 const FlixxitSlice = createSlice({
   name: "Flixxit",
   initialState,
