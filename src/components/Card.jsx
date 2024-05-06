@@ -27,7 +27,7 @@ export default React.memo(function Card({ index, movieData, isLiked = false }) {
 
   const addToList = async () => {
     try {
-      await axios.post("https://flixxit-backend-5.onrender.com/api/user/add", {
+      await axios.post("https://project-backend-5lz1.onrender.com/api/user/add", {
         email,
         data: movieData,
       });
